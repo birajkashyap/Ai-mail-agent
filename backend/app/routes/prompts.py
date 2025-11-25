@@ -64,16 +64,19 @@ async def seed_prompts():
         
     default_prompts = [
         {
+            "name": "Categorization Prompt",
             "type": "categorization",
             "template": "Analyze the email content and categorize it into one of the following: Important, Work, Personal, Newsletter, Spam. Return only the category name.",
             "is_active": True
         },
         {
+            "name": "Summarization Prompt",
             "type": "summarization",
             "template": "Summarize the following email in 2-3 concise sentences. Focus on the main action items and key information.",
             "is_active": True
         },
         {
+            "name": "Reply Prompt",
             "type": "reply",
             "template": "Draft a polite and professional reply to this email. Address the sender by name if possible. Keep the tone helpful and concise.",
             "is_active": True
