@@ -71,10 +71,12 @@ export default function Home() {
             </button>
           </Link>
           
-          <button className="px-8 py-4 bg-muted/30 border border-border text-foreground font-medium rounded-xl hover:bg-muted/50 transition-all duration-300 flex items-center gap-2 backdrop-blur-sm">
-            <Play className="w-4 h-4 fill-current" />
-            Watch Demo
-          </button>
+          <a href="https://drive.google.com/file/d/1exFRx6GpeACAvHssw6qQEReNPyi6DF4C/view?usp=drive_link" target="_blank" rel="noopener noreferrer">
+            <button className="px-8 py-4 bg-muted/30 border border-border text-foreground font-medium rounded-xl hover:bg-muted/50 transition-all duration-300 flex items-center gap-2 backdrop-blur-sm">
+              <Play className="w-4 h-4 fill-current" />
+              Watch Demo
+            </button>
+          </a>
         </motion.div>
       </div>
 
