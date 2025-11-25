@@ -1,0 +1,12 @@
+import google.generativeai as genai
+from app.config import settings
+import asyncio
+
+def list_models():
+    genai.configure(api_key=settings.GEMINI_API_KEY)
+    for m in genai.list_models():
+        if 'generateContent' in m.supported_generation_methods:
+            print(m.name)
+
+if __name__ == "__main__":
+    list_models()
