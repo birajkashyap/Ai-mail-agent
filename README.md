@@ -33,8 +33,19 @@ An intelligent, prompt-driven Email Productivity Agent capable of processing an 
     npm run dev
     ```
 
+## Deployment
+
+- **Frontend (Vercel)**: [https://ai-mail-agent.vercel.app](https://ai-mail-agent.vercel.app)
+- **Backend (Render)**: [https://ai-mail-agent-gby4.onrender.com](https://ai-mail-agent-gby4.onrender.com)
+
 ## Usage
-1.  Open the frontend at `http://localhost:3000`.
-2.  Click "Load Inbox" to ingest mock emails.
-3.  Go to "Prompt Brain" to configure your agent's behavior.
-4.  Use the "Email Agent" chat to interact with your emails.
+
+1.  **Local**: Open `http://localhost:3000`.
+2.  **Production**: Open [https://ai-mail-agent.vercel.app](https://ai-mail-agent.vercel.app).
+3.  **Refresh Inbox**: Click the refresh button to load emails (from backend or mock data).
+4.  **Prompt Brain**: Configure AI behavior in the "Brain" tab.
+5.  **AI Chat**: Click any email and use the chat interface to:
+    -   Summarize the email.
+    -   Draft a reply.
+    -   Extract action items.
+    -   Ask specific questions (e.g., "What is the deadline?").
