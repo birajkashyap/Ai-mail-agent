@@ -17,6 +17,7 @@ app.add_middleware(
         "http://localhost:3000",
         "https://ai-mail-agent.vercel.app"
     ],
+    allow_origin_regex="https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
