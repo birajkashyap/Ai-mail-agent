@@ -62,8 +62,6 @@ export default function PromptsPage() {
         </button>
       </div>
       
-      </div>
-      
       {prompts.length === 0 && !loading ? (
         <div className="text-center py-20 bg-card border border-border rounded-xl">
           <Brain className="w-16 h-16 text-muted-foreground mx-auto mb-6 opacity-50" />
@@ -88,32 +86,33 @@ export default function PromptsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-8">
-        {prompts.map((prompt, index) => (
-          <motion.div
-            key={prompt._id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="bg-card border border-border rounded-xl overflow-hidden shadow-sm"
-          >
-            <div className="p-4 border-b border-border bg-muted/30 flex justify-between items-center">
-              <div>
-                <h2 className="font-semibold text-foreground capitalize">{prompt.type} Prompt</h2>
-                <p className="text-xs text-muted-foreground">ID: {prompt._id}</p>
+          {prompts.map((prompt, index) => (
+            <motion.div
+              key={prompt._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-card border border-border rounded-xl overflow-hidden shadow-sm"
+            >
+              <div className="p-4 border-b border-border bg-muted/30 flex justify-between items-center">
+                <div>
+                  <h2 className="font-semibold text-foreground capitalize">{prompt.type} Prompt</h2>
+                  <p className="text-xs text-muted-foreground">ID: {prompt._id}</p>
+                </div>
+                {prompt.is_active && (
+                  <span className="px-2 py-1 bg-green-500/10 text-green-500 text-xs rounded-full border border-green-500/20">
+                    Active
+                  </span>
+                )}
               </div>
-              {prompt.is_active && (
-                <span className="px-2 py-1 bg-green-500/10 text-green-500 text-xs rounded-full border border-green-500/20">
-                  Active
-                </span>
-              )}
-            </div>
-            
-            <div className="p-6">
-              <PromptEditor prompt={prompt} onSave={handleSave} saving={saving === prompt._id} />
-            </div>
-          </motion.div>
-        ))}
-      </div>
+              
+              <div className="p-6">
+                <PromptEditor prompt={prompt} onSave={handleSave} saving={saving === prompt._id} />
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
