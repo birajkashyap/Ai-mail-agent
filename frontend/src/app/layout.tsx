@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Mail, Home, FileText, Brain } from "lucide-react";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Footer } from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -81,9 +82,10 @@ export default function RootLayout({
           </nav>
 
           {/* Main Content */}
-          <main className="flex-1">
+          <main className="flex-1 pb-20">
             {children}
           </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
