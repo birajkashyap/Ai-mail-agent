@@ -1,0 +1,32 @@
+[
+  {
+    "sender": "boss@company.com",
+    "subject": "Urgent: Q4 Report Due",
+    "body": "Hi, I need the Q4 report by EOD tomorrow. Please prioritize this.",
+    "timestamp": "2023-10-27T09:00:00Z"
+  },
+  {
+    "sender": "newsletter@techweekly.com",
+    "subject": "Tech Weekly: AI is taking over",
+    "body": "Here are the top stories in tech this week...",
+    "timestamp": "2023-10-27T10:00:00Z"
+  },
+  {
+    "sender": "recruiter@linkedin.com",
+    "subject": "New job opportunity",
+    "body": "I saw your profile and thought you would be a great fit for...",
+    "timestamp": "2023-10-27T11:00:00Z"
+  },
+  {
+    "sender": "client@bigcorp.com",
+    "subject": "Meeting Request: Project Kickoff",
+    "body": "Can we meet next Tuesday at 2 PM to discuss the new project?",
+    "timestamp": "2023-10-27T12:00:00Z"
+  },
+  {
+    "sender": "spam@offers.com",
+    "subject": "You won a cruise!",
+    "body": "Click here to claim your prize...",
+    "timestamp": "2023-10-27T13:00:00Z"
+  }
+]
