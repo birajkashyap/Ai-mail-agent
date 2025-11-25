@@ -104,9 +104,4 @@ export const api = {
       method: 'DELETE',
     });
   },
-  deleteDraft: async (id: string) => {
-    return fetchJson<{ message: string }>(`/api/agent/drafts/${id}`, {
-      method: 'DELETE',
-    });
-  }
 };
