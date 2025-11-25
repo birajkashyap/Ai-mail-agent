@@ -68,18 +68,25 @@ export const api = {
   },
 
   // Agent Routes
-  chat: async (query: string, emailId?: string, context?: string) => {
+  chat: async (query: string, email?: Email, context?: string) => {
     return fetchJson<{ response: string }>('/api/agent/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, email_id: emailId, context }),
+      body: JSON.stringify({ 
+        message: query, 
+        email: email, 
+        context 
+      }),
     });
   },
-  generateDraft: async (emailId: string, instructions?: string) => {
+  generateDraft: async (email: Email, instructions?: string) => {
     return fetchJson<{ draft_id: string; content: string }>('/api/agent/draft', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email_id: emailId, instructions }),
+      body: JSON.stringify({ 
+        email: email, 
+        instructions 
+      }),
     });
   },
   getDrafts: async (): Promise<Draft[]> => {

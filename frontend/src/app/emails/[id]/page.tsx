@@ -106,7 +106,7 @@ export default function EmailDetailPage({ params }: { params: Promise<{ id: stri
         animate={{ opacity: 1, x: 0 }}
         className="w-2/5 bg-card border-l border-border h-full flex flex-col"
       >
-        <ChatInterface emailId={email._id} />
+        <ChatInterface email={email} />
       </motion.div>
     </div>
   );

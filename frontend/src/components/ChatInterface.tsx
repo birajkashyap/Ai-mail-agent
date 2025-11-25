@@ -9,7 +9,9 @@ import { api } from '@/lib/api';
 
 import ReactMarkdown from 'react-markdown';
 
-export default function ChatInterface({ emailId }: { emailId?: string }) {
+import { Email } from '@/lib/types';
+
+export default function ChatInterface({ email }: { email?: Email }) {
   const [messages, setMessages] = useState<{role: 'user' | 'agent', content: string}[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,7 +25,7 @@ export default function ChatInterface({ emailId }: { emailId?: string }) {
     setLoading(true);
 
     try {
-      const res = await api.chat(userMsg, emailId);
+      const res = await api.chat(userMsg, email);
       setMessages(prev => [...prev, { role: 'agent', content: res.response }]);
     } catch (error) {
       console.error(error);
@@ -37,7 +39,7 @@ export default function ChatInterface({ emailId }: { emailId?: string }) {
     setMessages(prev => [...prev, { role: 'user', content: "Draft a reply for me." }]);
     setLoading(true);
     try {
-      const res = await api.generateDraft(emailId!, input || "Draft a polite reply.");
+      const res = await api.generateDraft(email!, input || "Draft a polite reply.");
       setMessages(prev => [...prev, { 
         role: 'agent', 
         content: `I've drafted a reply for you:\n\n${res.content}\n\n**(Saved to Drafts)**` 

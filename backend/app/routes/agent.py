@@ -9,59 +9,70 @@ router = APIRouter(prefix="/api/agent", tags=["Agent"])
 
 @router.post("/chat")
 async def chat_agent(payload: dict = Body(...)):
-    query = payload.get("query")
-    email_id = payload.get("email_id")
+    message = payload.get("message")
+    email = payload.get("email")
     context = payload.get("context", "")
     
-    if not query:
-        raise HTTPException(status_code=400, detail="Query is required")
+    if not message:
+        raise HTTPException(status_code=400, detail="Message is required")
         
     email_content = ""
-    if email_id:
-        try:
-            oid = ObjectId(email_id)
-            emails_collection = db.get_db()["emails"]
-            email = await emails_collection.find_one({"_id": oid})
-            if email:
-                email_content = f"Email Subject: {email['subject']}\nEmail Body: {email['body']}\n"
-        except:
-            pass
+    if email:
+        email_content = f"Subject: {email.get('subject', 'No Subject')}\nFrom: {email.get('sender', 'Unknown')}\nBody:\n{email.get('body', '')}\n"
             
-    prompt = f"Context: {context}\n\n{email_content}\nUser Query: {query}"
+    prompt = f"""
+You are an AI email assistant.
+
+Here is the email the user is asking about:
+
+{email_content}
+
+User message: {message}
+Context: {context}
+"""
     response = await llm_service.generate_text(prompt, system_prompt="You are a helpful email assistant.")
     
     return {"response": response}
 
 @router.post("/draft")
 async def generate_draft(payload: dict = Body(...)):
-    email_id = payload.get("email_id")
+    email = payload.get("email")
     instructions = payload.get("instructions", "")
     
-    if not email_id:
-        raise HTTPException(status_code=400, detail="Email ID is required")
-        
-    try:
-        oid = ObjectId(email_id)
-        emails_collection = db.get_db()["emails"]
-        email = await emails_collection.find_one({"_id": oid})
-        if not email:
-            raise HTTPException(status_code=404, detail="Email not found")
-    except:
-        raise HTTPException(status_code=400, detail="Invalid Email ID")
+    if not email:
+        raise HTTPException(status_code=400, detail="Email object is required")
         
     # Fetch Reply Prompt
     prompts_collection = db.get_db()["prompts"]
     reply_prompt_doc = await prompts_collection.find_one({"type": "reply", "is_active": True})
     reply_prompt_text = reply_prompt_doc["template"] if reply_prompt_doc else "Draft a polite reply to this email."
     
-    prompt = f"Original Email:\nSubject: {email['subject']}\nBody: {email['body']}\n\nInstructions: {instructions}\n\n{reply_prompt_text}"
+    prompt = f"""
+Original Email:
+Subject: {email.get('subject', 'No Subject')}
+From: {email.get('sender', 'Unknown')}
+Body: {email.get('body', '')}
+
+Instructions: {instructions}
+
+{reply_prompt_text}
+"""
     
     draft_content = await llm_service.generate_text(prompt, system_prompt="You are an email drafting assistant.")
     
     # Create Draft
+    # Note: We still need an email_id for the draft record. 
+    # If it's a mock email, we might not have a valid ObjectId.
+    # We will try to use the provided _id, or generate a new one if invalid.
+    email_id_str = email.get('_id')
+    try:
+        oid = ObjectId(email_id_str)
+    except:
+        oid = ObjectId() # Generate a new ID if invalid/mock
+    
     draft = Draft(
         email_id=oid,
-        subject=f"Re: {email['subject']}",
+        subject=f"Re: {email.get('subject', 'No Subject')}",
         body=draft_content,
         status="generated"
     )
