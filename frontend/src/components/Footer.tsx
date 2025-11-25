@@ -1,9 +1,38 @@
+'use client';
+
 import Link from 'next/link';
 import { Github, Linkedin, Globe } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export function Footer() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show on scroll down, hide on scroll up
+      // Also hide if at the very top
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   return (
-    <footer className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/80 backdrop-blur-md">
+    <footer 
+      className={`fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/80 backdrop-blur-md transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : 'translate-y-full'
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} Biraj Kashyap. All rights reserved.
