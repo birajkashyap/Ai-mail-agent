@@ -1,5 +1,9 @@
 # Prompt-Driven Email Productivity Agent
 
+> [!IMPORTANT]
+> **Backend Cold Start**: This application uses the free tier of Render. It may take **1-2 minutes** for the backend to spin up.
+> **[Watch the Demo Video](https://drive.google.com/file/d/1exFRx6GpeACAvHssw6qQEReNPyi6DF4C/view?usp=drive_link)** or set up locally to avoid the wait.
+
 An intelligent, prompt-driven Email Productivity Agent capable of processing an inbox and performing automated tasks such as categorization, action-item extraction, and auto-drafting replies.
 
 ## Setup Instructions
