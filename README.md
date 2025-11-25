@@ -44,6 +44,7 @@ An intelligent, prompt-driven Email Productivity Agent capable of processing an 
 2.  **Production**: Open [https://ai-mail-agent.vercel.app](https://ai-mail-agent.vercel.app).
 3.  **Refresh Inbox**: Click the refresh button to load emails (from backend or mock data).
 4.  **Prompt Brain**: Configure AI behavior in the "Brain" tab.
+    -   *Note*: If the database is empty, click the **"Initialize Brain"** button to seed default prompts.
 5.  **AI Chat**: Click any email and use the chat interface to:
     -   Summarize the email.
     -   Draft a reply.
