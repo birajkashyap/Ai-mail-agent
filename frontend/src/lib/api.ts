@@ -92,6 +92,18 @@ export const api = {
   getDrafts: async (): Promise<Draft[]> => {
     return fetchJson<Draft[]>('/api/agent/drafts');
   },
+  updateDraft: async (id: string, body: string): Promise<Draft> => {
+    return fetchJson<Draft>(`/api/agent/drafts/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body }),
+    });
+  },
+  deleteDraft: async (id: string): Promise<void> => {
+    return fetchJson<void>(`/api/agent/drafts/${id}`, {
+      method: 'DELETE',
+    });
+  },
   deleteDraft: async (id: string) => {
     return fetchJson<{ message: string }>(`/api/agent/drafts/${id}`, {
       method: 'DELETE',

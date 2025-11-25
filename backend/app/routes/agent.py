@@ -89,3 +89,37 @@ async def get_drafts():
     drafts_collection = db.get_db()["drafts"]
     drafts = await drafts_collection.find().sort("created_at", -1).to_list(100)
     return drafts
+
+@router.put("/drafts/{draft_id}", response_model=Draft)
+async def update_draft(draft_id: str, payload: dict = Body(...)):
+    drafts_collection = db.get_db()["drafts"]
+    try:
+        oid = ObjectId(draft_id)
+    except:
+        raise HTTPException(status_code=400, detail="Invalid Draft ID")
+        
+    update_result = await drafts_collection.update_one(
+        {"_id": oid},
+        {"$set": {"body": payload.get("body")}}
+    )
+    
+    if update_result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Draft not found")
+        
+    updated_draft = await drafts_collection.find_one({"_id": oid})
+    return updated_draft
+
+@router.delete("/drafts/{draft_id}")
+async def delete_draft(draft_id: str):
+    drafts_collection = db.get_db()["drafts"]
+    try:
+        oid = ObjectId(draft_id)
+    except:
+        raise HTTPException(status_code=400, detail="Invalid Draft ID")
+        
+    delete_result = await drafts_collection.delete_one({"_id": oid})
+    
+    if delete_result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Draft not found")
+        
+    return {"message": "Draft deleted"}

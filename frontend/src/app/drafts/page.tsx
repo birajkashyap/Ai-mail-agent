@@ -41,15 +41,19 @@ export default function DraftsPage() {
     }
   };
 
-  const handleSaveEdit = (newBody: string) => {
+  const handleSaveEdit = async (newBody: string) => {
     if (!editingDraft) return;
     
-    // Optimistic update for local state
-    setDrafts(prev => prev.map(d => d._id === editingDraft._id ? { ...d, body: newBody } : d));
-    setEditingDraft(null);
-    
-    // Note: No update endpoint exists, so this is local only for now
-    console.warn("Draft update is local-only as backend endpoint is missing.");
+    try {
+      await api.updateDraft(editingDraft._id, newBody);
+      
+      // Update local state
+      setDrafts(prev => prev.map(d => d._id === editingDraft._id ? { ...d, body: newBody } : d));
+      setEditingDraft(null);
+    } catch (error) {
+      console.error("Failed to update draft:", error);
+      alert("Failed to save changes. Please try again.");
+    }
   };
 
   const getTimeAgo = (dateString: string) => {
