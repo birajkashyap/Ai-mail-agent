@@ -62,7 +62,32 @@ export default function PromptsPage() {
         </button>
       </div>
       
-      <div className="grid grid-cols-1 gap-8">
+      </div>
+      
+      {prompts.length === 0 && !loading ? (
+        <div className="text-center py-20 bg-card border border-border rounded-xl">
+          <Brain className="w-16 h-16 text-muted-foreground mx-auto mb-6 opacity-50" />
+          <h2 className="text-xl font-semibold mb-2">Brain is Empty</h2>
+          <p className="text-muted-foreground mb-6">Initialize the agent with default instructions to get started.</p>
+          <button 
+            onClick={async () => {
+              setLoading(true);
+              try {
+                await api.seedPrompts();
+                loadPrompts();
+              } catch (err) {
+                console.error(err);
+                setLoading(false);
+              }
+            }}
+            className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center gap-2 mx-auto"
+          >
+            <Brain className="w-5 h-5" />
+            Initialize Brain
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 gap-8">
         {prompts.map((prompt, index) => (
           <motion.div
             key={prompt._id}

@@ -59,11 +59,16 @@ export const api = {
   getPrompts: async (): Promise<Prompt[]> => {
     return fetchJson<Prompt[]>('/api/prompts/');
   },
-  updatePrompt: async (id: string, prompt: Partial<Prompt>) => {
+  updatePrompt: async (id: string, prompt: Partial<Prompt>): Promise<Prompt> => {
     return fetchJson<Prompt>(`/api/prompts/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(prompt),
+    });
+  },
+  seedPrompts: async (): Promise<void> => {
+    return fetchJson<void>('/api/prompts/seed', {
+      method: 'POST',
     });
   },
 
